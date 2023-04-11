@@ -2,6 +2,16 @@
 <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
         <item>
+            <title>3.0.0.maa.2</title>
+            <pubDate>Tue, 11 Apr 2023 18:31:23 +1000</pubDate>
+            <link>https://github.com/hguandl/PlayCover/releases/tag/v3.0.0.maa.2</link>
+            <sparkle:fullReleaseNotesLink>https://github.com/hguandl/PlayCover/releases/tag/v3.0.0.maa.2</sparkle:fullReleaseNotesLink>
+            <sparkle:version>2</sparkle:version>
+            <sparkle:shortVersionString>3.0.0.maa.2</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/hguandl/PlayCover/releases/download/v3.0.0.maa.2/PlayCover-v3.0.0.maa.2.dmg" length="3990176" type="application/octet-stream" sparkle:edSignature="xVD7tfLu+dKpNWkT+di8wrnWLMDIJv27e90j60MqHR8s6iqaCsdUJ4RL1eNxHSGDD59tXpf0BIrg2UMHJYATAg=="/>
+        </item>
+        <item>
             <title>3.0.0.maa.1</title>
             <pubDate>Tue, 11 Apr 2023 01:10:31 +1000</pubDate>
             <link>https://github.com/hguandl/PlayCover/releases/tag/v3.0.0.maa.1</link>
