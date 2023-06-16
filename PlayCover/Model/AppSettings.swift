@@ -9,7 +9,6 @@ import UniformTypeIdentifiers
 
 struct AppSettingsData: Codable {
     var keymapping = true
-    var mouseMapping = true
     var sensitivity: Float = 50
 
     var disableTimeout = false
@@ -23,12 +22,14 @@ struct AppSettingsData: Codable {
     var bypass = false
     var discordActivity = DiscordActivity()
     var version = "3.0.0"
-    var playChain = false
+    var playChain = true
     var playChainDebugging = false
     var inverseScreenValues = false
     var metalHUD = false
     var windowFixMethod = 0
     var injectIntrospection = false
+    var rootWorkDir = true
+    var noKMOnInput = true
 
     var maaTools = false
     var maaToolsPort = 1717
@@ -39,7 +40,6 @@ struct AppSettingsData: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         keymapping = try container.decodeIfPresent(Bool.self, forKey: .keymapping) ?? true
-        mouseMapping = try container.decodeIfPresent(Bool.self, forKey: .mouseMapping) ?? true
         sensitivity = try container.decodeIfPresent(Float.self, forKey: .sensitivity) ?? 50
         disableTimeout = try container.decodeIfPresent(Bool.self, forKey: .disableTimeout) ?? false
         iosDeviceModel = try container.decodeIfPresent(String.self, forKey: .iosDeviceModel) ?? "iPad13,8"
@@ -53,12 +53,14 @@ struct AppSettingsData: Codable {
         discordActivity = try container.decodeIfPresent(DiscordActivity.self,
                                                         forKey: .discordActivity) ?? DiscordActivity()
         version = try container.decodeIfPresent(String.self, forKey: .version) ?? "3.0.0"
-        playChain = try container.decodeIfPresent(Bool.self, forKey: .playChain) ?? false
+        playChain = try container.decodeIfPresent(Bool.self, forKey: .playChain) ?? true
         playChainDebugging = try container.decodeIfPresent(Bool.self, forKey: .playChainDebugging) ?? false
         inverseScreenValues = try container.decodeIfPresent(Bool.self, forKey: .inverseScreenValues) ?? false
         metalHUD = try container.decodeIfPresent(Bool.self, forKey: .metalHUD) ?? false
         windowFixMethod = try container.decodeIfPresent(Int.self, forKey: .windowFixMethod) ?? 0
         injectIntrospection = try container.decodeIfPresent(Bool.self, forKey: .injectIntrospection) ?? false
+        rootWorkDir = try container.decodeIfPresent(Bool.self, forKey: .rootWorkDir) ?? true
+        noKMOnInput = try container.decodeIfPresent(Bool.self, forKey: .noKMOnInput) ?? true
 
         maaTools = try container.decodeIfPresent(Bool.self, forKey: .maaTools) ?? false
         maaToolsPort = try container.decodeIfPresent(Int.self, forKey: .maaToolsPort) ?? 1717
