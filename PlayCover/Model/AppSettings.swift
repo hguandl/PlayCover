@@ -40,6 +40,7 @@ struct AppSettingsData: Codable {
     var injectIntrospection = false
     var rootWorkDir = true
     var noKMOnInput = true
+    var enableScrollWheel = true
 
     var maaTools = false
     var maaToolsPort = 1717
@@ -72,6 +73,7 @@ struct AppSettingsData: Codable {
         injectIntrospection = try container.decodeIfPresent(Bool.self, forKey: .injectIntrospection) ?? false
         rootWorkDir = try container.decodeIfPresent(Bool.self, forKey: .rootWorkDir) ?? true
         noKMOnInput = try container.decodeIfPresent(Bool.self, forKey: .noKMOnInput) ?? true
+        enableScrollWheel = try container.decodeIfPresent(Bool.self, forKey: .enableScrollWheel) ?? true
 
         maaTools = try container.decodeIfPresent(Bool.self, forKey: .maaTools) ?? false
         maaToolsPort = try container.decodeIfPresent(Int.self, forKey: .maaToolsPort) ?? 1717
@@ -98,16 +100,14 @@ class AppSettings {
     let settingsUrl: URL
     var openWithLLDB: Bool = false
     var openLLDBWithTerminal: Bool = true
-    var container: AppContainer?
     var settings: AppSettingsData {
         didSet {
             encode()
         }
     }
 
-    init(_ info: AppInfo, container: AppContainer?) {
+    init(_ info: AppInfo) {
         self.info = info
-        self.container = container
         settingsUrl = AppSettings.appSettingsDir.appendingPathComponent(info.bundleIdentifier)
                                                 .appendingPathExtension("plist")
         settings = AppSettingsData()
@@ -154,15 +154,11 @@ class AppSettings {
     }
 }
 
-let notchModels = ["MacBookPro18,3", "MacBookPro18,4", "MacBookPro18,1", "MacBookPro18,2", "Mac14,2"]
-
 extension NSScreen {
     public static func hasNotch() -> Bool {
-        if let model = NSScreen.getMacModel() {
-            return notchModels.contains(model)
-        } else {
-            return false
-        }
+        guard #available(macOS 12, *) else { return false }
+        // check if any of the connected screens contains a notch
+        return NSScreen.screens.contains { $0.safeAreaInsets.top != 0 }
     }
 
     private static func getMacModel() -> String? {
