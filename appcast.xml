@@ -7,9 +7,9 @@
             <link>https://github.com/hguandl/PlayCover/releases/tag/v3.0.0.maa.5</link>
             <sparkle:fullReleaseNotesLink>https://github.com/hguandl/PlayCover/releases/tag/v3.0.0.maa.5</sparkle:fullReleaseNotesLink>
             <sparkle:version>5</sparkle:version>
-            <sparkle:shortVersionString>3.0.0.maa.5</sparkle:shortVersionString>
+            <sparkle:shortVersionString>3.1.0.maa</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/hguandl/PlayCover/releases/download/v3.0.0.maa.5/PlayCover-v3.0.0.maa.5.dmg" length="4188250" type="application/octet-stream" sparkle:edSignature="hbwuzmaFx5+G6k5vDQCN54YvFezl3BBnfoa7KmvJ8k97ooObNSJ/WkcLBOnERH2Cae7xT7XJaF6HwfjXIXiEDA=="/>
+            <enclosure url="https://github.com/hguandl/PlayCover/releases/download/v3.1.0.maa/PlayCover-v3.1.0.maa.dmg" length="4212576" type="application/octet-stream" sparkle:edSignature="7VF1oIeeyg0b1K4N+2EDBDfIOyPsYscQIvZvC5jMCV3xpx6vXOJA4yBQ17qgvvtH+HyHQPNHFIg2Rrw+NY5CDw=="/>
         </item>
         <item>
             <title>3.0.0.maa.4</title>
