@@ -573,7 +573,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
-			shellScript = "set -euo pipefail\n\nif [ -x /usr/local/bin/carthage ]; then\n    carthage=/usr/local/bin/carthage\nelif [ -x /opt/homebrew/bin/carthage ]; then\n    carthage=/opt/homebrew/bin/carthage\nelif [ -x /opt/local/bin/carthage ]; then\n    carthage=/opt/local/bin/carthage\nelse\n    echo \"Cannot find carthage\"\n    exit 1\nfi\n\necho \"Converting to maccatalyst\"\nvtool \\\n    -set-build-version maccatalyst 11.0 14.0 \\\n    -replace -output \\\n    \"${SCRIPT_INPUT_FILE_0}/PlayTools\" \\\n    \"${SCRIPT_INPUT_FILE_0}/PlayTools\"\n\necho \"Codesigning PlayTools\"\n\n$carthage copy-frameworks\n\necho cp -rf ${SRCROOT}/Carthage/Build/PlayTools.xcframework/ios-arm64/PlayTools.framework/PlugIns/AKInterface.bundle ${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/PlayTools.framework/PlugIns/AKInterface.bundle\n\nrm -rf ${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/PlayTools.framework/PlugIns/AKInterface.bundle\ncp -rf ${SRCROOT}/Carthage/Build/PlayTools.xcframework/ios-arm64/PlayTools.framework/PlugIns/AKInterface.bundle ${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/PlayTools.framework/PlugIns/AKInterface.bundle\n";
+			shellScript = "set -euo pipefail\n\nif [ -x /usr/local/bin/carthage ]; then\n    carthage=/usr/local/bin/carthage\nelif [ -x /opt/homebrew/bin/carthage ]; then\n    carthage=/opt/homebrew/bin/carthage\nelif [ -x /opt/local/bin/carthage ]; then\n    carthage=/opt/local/bin/carthage\nelse\n    echo \"Cannot find carthage\"\n    exit 1\nfi\n\necho \"Codesigning PlayTools\"\n\n$carthage copy-frameworks\n\necho cp -rf ${SCRIPT_INPUT_FILE_0}/PlugIns/AKInterface.bundle ${SCRIPT_OUTPUT_FILE_0}/PlugIns/AKInterface.bundle\n\nrm -rf ${SCRIPT_OUTPUT_FILE_0}/PlugIns/AKInterface.bundle\ncp -rf ${SCRIPT_INPUT_FILE_0}/PlugIns/AKInterface.bundle ${SCRIPT_OUTPUT_FILE_0}/PlugIns/AKInterface.bundle\n\necho \"Converting to maccatalyst\"\nvtool \\\n    -set-build-version maccatalyst 11.0 14.0 \\\n    -replace -output \\\n    \"${SCRIPT_OUTPUT_FILE_0}/PlayTools\" \\\n    \"${SCRIPT_OUTPUT_FILE_0}/PlayTools\"\n";
 		};
 		AAC28F222899A05B005057FB /* Codesign sparkle */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -794,7 +794,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 310;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "PlayCover/Preview\\ Content";
@@ -897,7 +897,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 310;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "PlayCover/Preview\\ Content";
