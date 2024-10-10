@@ -2,6 +2,16 @@
 <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
         <item>
+            <title>3.1.0.maa</title>
+            <pubDate>Thu, 10 Oct 2024 14:53:10 +0800</pubDate>
+            <link>https://github.com/hguandl/PlayCover/releases/tag/v3.1.0.maa</link>
+            <sparkle:fullReleaseNotesLink>https://github.com/hguandl/PlayCover/releases/tag/v3.1.0.maa</sparkle:fullReleaseNotesLink>
+            <sparkle:version>310</sparkle:version>
+            <sparkle:shortVersionString>3.1.0.maa</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/hguandl/PlayCover/releases/download/v3.1.0.maa/PlayCover-v3.1.0.maa.dmg" length="4212921" type="application/octet-stream" sparkle:edSignature="TY/R3xwkNTNIN+xSqOf63dWckczspC2lalvyPidVtfFqyS1nZdhaY7z2/Hr9B+IsVXc7ST0qdL6o6Yy8VnPNCw=="/>
+        </item>
+        <item>
             <title>3.0.0.maa.5</title>
             <pubDate>Wed, 03 Jul 2024 00:05:18 +0800</pubDate>
             <link>https://github.com/hguandl/PlayCover/releases/tag/v3.0.0.maa.5</link>
@@ -20,16 +30,6 @@
             <sparkle:shortVersionString>3.0.0.maa.4</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
             <enclosure url="https://github.com/hguandl/PlayCover/releases/download/v3.0.0.maa.4/PlayCover-v3.0.0.maa.4.dmg" length="3929511" type="application/octet-stream" sparkle:edSignature="BBRM3DYeVZAhY+AdNKxIzLVzdKDzLvAg6GbtQBaBjpq+aB0Yjh8gbxm+lspisF4YmU6kwqxpv+qlwu+DSVX3Dw=="/>
-        </item>
-        <item>
-            <title>3.0.0.maa.3</title>
-            <pubDate>Sun, 18 Jun 2023 13:40:17 +1000</pubDate>
-            <link>https://github.com/hguandl/PlayCover/releases/tag/v3.0.0.maa.3</link>
-            <sparkle:fullReleaseNotesLink>https://github.com/hguandl/PlayCover/releases/tag/v3.0.0.maa.3</sparkle:fullReleaseNotesLink>
-            <sparkle:version>3</sparkle:version>
-            <sparkle:shortVersionString>3.0.0.maa.3</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/hguandl/PlayCover/releases/download/v3.0.0.maa.3/PlayCover-v3.0.0.maa.3.dmg" length="4059178" type="application/octet-stream" sparkle:edSignature="KJ6aKSW5U+t0mmBRUgfxI/Dmxg4d3yk9deUycfDpx26A17o8nakbqjMOionHbZ9OUzBA6l9jxOj01pVKpGKICg=="/>
         </item>
     </channel>
 </rss>
