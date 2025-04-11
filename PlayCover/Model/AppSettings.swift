@@ -27,6 +27,8 @@ struct AppSettingsData: Codable {
     var version = "3.0.0"
     var playChain = true
     var playChainDebugging = false
+    var maaTools = false
+    var maaToolsPort = 1717
     var inverseScreenValues = false
     var metalHUD = false {
         didSet {
@@ -76,6 +78,8 @@ struct AppSettingsData: Codable {
         version = try container.decodeIfPresent(String.self, forKey: .version) ?? "3.0.0"
         playChain = try container.decodeIfPresent(Bool.self, forKey: .playChain) ?? true
         playChainDebugging = try container.decodeIfPresent(Bool.self, forKey: .playChainDebugging) ?? false
+        maaTools = try container.decodeIfPresent(Bool.self, forKey: .maaTools) ?? false
+        maaToolsPort = try container.decodeIfPresent(Int.self, forKey: .maaToolsPort) ?? 1717
         inverseScreenValues = try container.decodeIfPresent(Bool.self, forKey: .inverseScreenValues) ?? false
         metalHUD = try container.decodeIfPresent(Bool.self, forKey: .metalHUD) ?? false
         windowFixMethod = try container.decodeIfPresent(Int.self, forKey: .windowFixMethod) ?? 0
