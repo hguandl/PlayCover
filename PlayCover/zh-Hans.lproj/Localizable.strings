@@ -375,6 +375,8 @@
 "settings.toggle.enableScrollWheel.help" = "在按键映射启用滚轮";
 "settings.toggle.iosFrameworks.help" = "将系统 ios 库添加到应用程序中。已知可修复某些应用程序找不到 ios 框架的问题";
 "settings.toggle.enableScrollWheel" = "启用滚轮";
+"settings.toggle.blockSleepSpamming" = "阻止休眠调用刷屏";
+"settings.toggle.blockSleepSpamming.help" = "防止应用频繁调用休眠/唤醒接口。已知可修复某些应用的性能问题";
 "ipaLibrary.info.notAvailable" = "此应用链接不可用";
 "ipaLibrary.info" = "应用信息";
 "ipaLibrary.info.checksum.none" = "未提供";

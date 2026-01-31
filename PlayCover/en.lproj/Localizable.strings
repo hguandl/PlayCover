@@ -197,6 +197,8 @@
 "settings.toggle.iosFrameworks.help" = "Add the system ios libraries to the app. Known to fix issues with some apps cannot find ios framework";
 "settings.toggle.checkMicPermissionSync" = "Check Microphone Permission Synchronously";
 "settings.toggle.checkMicPermissionSync.help" = "Force microphone permission check to be synchronous. Known to fix issues with some apps complaining about microphone permission not being granted";
+"settings.toggle.blockSleepSpamming" = "Block Sleep Spamming";
+"settings.toggle.blockSleepSpamming.help" = "Prevent apps from spamming sleep/wake calls. Known to fix performance issues with some apps";
 
 "settings.applicationCategoryType" = "Application Type";
 "settings.removePlayTools" = "Remove PlayTools";
