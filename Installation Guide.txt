@@ -1,0 +1,16 @@
+=====================================================
+               App Installation Guide
+=====================================================
+
+[Important Notice]
+Do not double-click to run the app directly from the installer!
+
+-----------------------------------------------------
+[Installation Steps]
+-----------------------------------------------------
+
+1. Drag the [App Icon] into the [Applications] folder.
+2. Once copied, you can right-click to eject and delete the installer.
+3. Open the app from "Launchpad" or "App".
+
+=====================================================

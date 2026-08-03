@@ -20,6 +20,9 @@ codesign -s "Developer ID Application: Hao Guan (29V29Y67P2)" -f -o runtime --de
 mkdir -p build/PlayCover
 ln -sfh /Applications build/PlayCover/Applications
 mv $APP_BUNDLE build/PlayCover
+cp "安装说明.txt" build/PlayCover
+cp "Installation Guide.txt" build/PlayCover
+
 hdiutil create -srcfolder build/PlayCover -format UDBZ build/PlayCover.dmg
 
 ### Notarize PlayCover
