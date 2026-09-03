@@ -29,6 +29,7 @@ struct AppSettingsData: Codable {
     var playChainDebugging = false
     var maaTools = false
     var maaToolsPort = 1717
+    var enableMetalCapture = false
     var inverseScreenValues = false
     var metalHUD = false {
         didSet {
@@ -80,6 +81,7 @@ struct AppSettingsData: Codable {
         playChainDebugging = try container.decodeIfPresent(Bool.self, forKey: .playChainDebugging) ?? false
         maaTools = try container.decodeIfPresent(Bool.self, forKey: .maaTools) ?? false
         maaToolsPort = try container.decodeIfPresent(Int.self, forKey: .maaToolsPort) ?? 1717
+        enableMetalCapture = try container.decodeIfPresent(Bool.self, forKey: .maaTools) ?? false
         inverseScreenValues = try container.decodeIfPresent(Bool.self, forKey: .inverseScreenValues) ?? false
         metalHUD = try container.decodeIfPresent(Bool.self, forKey: .metalHUD) ?? false
         windowFixMethod = try container.decodeIfPresent(Int.self, forKey: .windowFixMethod) ?? 0

@@ -433,3 +433,5 @@
 "alert.start.anyway" = "仍然启动";
 "alert.version.title" = "发现新版本";
 "alert.version.text" = "%@有新版本可用。是否要下载？";
+"settings.stepper.maaToolsPort" = "端口：";
+"settings.toggle.mtlCapture" = "从Metal抓取";

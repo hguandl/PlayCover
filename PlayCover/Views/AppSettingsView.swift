@@ -576,7 +576,7 @@ struct BypassesView: View {
                 HStack {
                     Toggle("MaaTools", isOn: $settings.settings.maaTools)
                     Spacer()
-                    Text("Port:")
+                    Text("settings.stepper.maaToolsPort")
                     Stepper(value: $settings.settings.maaToolsPort, in: 1024 ... 65535) {
                         TextField("MaaTools Port",
                                   value: $settings.settings.maaToolsPort,
@@ -584,6 +584,9 @@ struct BypassesView: View {
                         .frame(width: 125)
                     }
                     .disabled(!settings.settings.maaTools)
+                    Spacer()
+                    Toggle("settings.toggle.mtlCapture", isOn: $settings.settings.enableMetalCapture)
+                        .disabled(!settings.settings.maaTools)
                     Spacer()
                 }
                 Spacer()
