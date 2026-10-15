@@ -48,7 +48,7 @@ struct PlayCoverHelpMenuView: Commands {
                 }
             }
             Button("menubar.discord", systemImage: "arrow.up.right") {
-                if let url = URL(string: "https://discord.gg/RNCHsQHr3S") {
+                if let url = URL(string: "https://discord.com/invite/playcover-871829896492642387") {
                     NSWorkspace.shared.open(url)
                 }
             }
