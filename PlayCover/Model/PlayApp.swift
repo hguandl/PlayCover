@@ -93,6 +93,12 @@ class PlayApp: BaseApp {
                 try Shell.signApp(executable)
             }
 
+            // Keep the chain marked in use while it is unlocked for this launch. runAppExec
+            // opens its own session before this one ends and closes it after the app exits.
+            let bundleID = info.bundleIdentifier
+            KeyCover.shared.beginSession(bundleID)
+            defer { KeyCover.shared.endSession(bundleID) }
+
             // Wait for keychain unlock to finish before continuing
             await unlockKeyCover()
 
@@ -153,6 +159,8 @@ extension PlayApp {
     }
 
     func runAppExec() {
+        // Ended in the completion handler, once the app has exited or failed to open
+        KeyCover.shared.beginSession(info.bundleIdentifier)
         let config = NSWorkspace.OpenConfiguration()
 
         // Prevent propagating debugging-related variables to child process
@@ -167,7 +175,10 @@ extension PlayApp {
             at: aliasURL,
             configuration: config,
             completionHandler: { runningApp, error in
-                guard error == nil else { return }
+                guard error == nil else {
+                    KeyCover.shared.endSession(self.info.bundleIdentifier)
+                    return
+                }
                 // Run a thread loop in the background to handle background tasks
                 Task(priority: .background) {
                     if let runningApp = runningApp {
@@ -182,6 +193,7 @@ extension PlayApp {
                         sleep(1)
                     }
                     // Things that are run after the app is closed
+                    KeyCover.shared.endSession(self.info.bundleIdentifier)
                     self.lockKeyCover()
                 }
             }
