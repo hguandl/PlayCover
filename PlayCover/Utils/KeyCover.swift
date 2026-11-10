@@ -67,8 +67,12 @@ struct KeyCover {
                 sleep(1)
             }
         }
-        if keychain.chainEncryptionStatus {
-            try keychain.decryptKeyDB()
+        // Check and decrypt under the chain lock, so a lock still running for a previous
+        // session finishes first instead of being read half-written.
+        try KeyCover.withChainLock {
+            if keychain.chainEncryptionStatus {
+                try keychain.decryptKeyDB()
+            }
         }
     }
 
@@ -76,17 +80,65 @@ struct KeyCover {
         if keyCoverPlainTextKey == nil {
             return
         }
-        if !keychain.chainEncryptionStatus {
-            try keychain.encryptKeyDB()
+        try KeyCover.withChainLock {
+            if KeyCover.isChainInUse(keychain.appBundleID) {
+                Log.shared.log("KeyCover: \(keychain.appBundleID) is still in use, leaving its chain unlocked")
+                return
+            }
+            if !keychain.chainEncryptionStatus {
+                try keychain.encryptKeyDB()
+            }
         }
     }
 
     func lockAllChainsAsync() {
         Task {
-            for keychain in KeyCover.shared.listKeychains() where !keychain.chainEncryptionStatus {
-                try? keychain.encryptKeyDB()
+            for keychain in KeyCover.shared.listKeychains() {
+                try? KeyCover.withChainLock {
+                    if !keychain.chainEncryptionStatus && !KeyCover.isChainInUse(keychain.appBundleID) {
+                        try keychain.encryptKeyDB()
+                    }
+                }
             }
         }
+    }
+
+    // MARK: Sessions
+    //
+    // A session spans from unlocking an app's chain before launch until that app has exited.
+    // Locking is refused while a session is open (or the app is still running), so the lock
+    // that runs after one launch exits can no longer encrypt and delete the database under
+    // a launch that started in the meantime.
+
+    private static let chainLock = NSLock()
+    private static var activeSessions: [String: Int] = [:]
+
+    static func withChainLock<T>(_ body: () throws -> T) rethrows -> T {
+        chainLock.lock()
+        defer { chainLock.unlock() }
+        return try body()
+    }
+
+    func beginSession(_ bundleID: String) {
+        KeyCover.withChainLock {
+            KeyCover.activeSessions[bundleID, default: 0] += 1
+        }
+    }
+
+    func endSession(_ bundleID: String) {
+        KeyCover.withChainLock {
+            let remaining = (KeyCover.activeSessions[bundleID] ?? 0) - 1
+            KeyCover.activeSessions[bundleID] = remaining > 0 ? remaining : nil
+        }
+    }
+
+    // Callers must hold the chain lock.
+    private static func isChainInUse(_ bundleID: String) -> Bool {
+        if activeSessions[bundleID] != nil {
+            return true
+        }
+        return NSRunningApplication.runningApplications(withBundleIdentifier: bundleID)
+            .contains { !$0.isTerminated }
     }
 }
 
@@ -106,6 +158,10 @@ class KeyCoverObservable: ObservableObject {
         unlockedCount = KeyCover.shared.unlockedCount()
         keychains = KeyCover.shared.listKeychains()
     }
+}
+
+enum KeyCoverError: Error {
+    case opensslFailed(Int32)
 }
 
 struct KeyCoverKey {
@@ -130,16 +186,9 @@ struct KeyCoverKey {
 
     func encryptKeyDB() throws {
         if let plainTextKey = KeyCover.shared.keyCoverPlainTextKey {
-            // encrypt the db file
-            let task = Process()
-            task.launchPath = "/usr/bin/openssl"
-            task.currentDirectoryPath = KeyCover.playChainPath.path
-            task.arguments = ["enc", "-aes-256-cbc", "-A",
-                                "-in", decryptedKeyDB.path,
-                                "-out", encryptedKeyDB.path,
-                                "-k", plainTextKey]
-            task.launch()
-            task.waitUntilExit()
+            // encrypt the db file; the plain db is only deleted once the encrypted copy is complete
+            try runOpenSSL(["enc", "-aes-256-cbc", "-A"], plainTextKey: plainTextKey,
+                           from: decryptedKeyDB, to: encryptedKeyDB)
 
             // delete the key dbs
             try deleteKeyDB()
@@ -152,20 +201,41 @@ struct KeyCoverKey {
 
     func decryptKeyDB() throws {
         if let plainTextKey = KeyCover.shared.keyCoverPlainTextKey {
-            // decrypt the zip file
-            let task = Process()
-            task.launchPath = "/usr/bin/openssl"
-            task.arguments = ["enc", "-aes-256-cbc", "-A", "-d", "-in", encryptedKeyDB.path, "-out",
-                              decryptedKeyDB.path,
-                              "-k", plainTextKey]
-            task.launch()
-            task.waitUntilExit()
+            // decrypt the db file; the encrypted copy is only deleted once decryption succeeded
+            try runOpenSSL(["enc", "-aes-256-cbc", "-A", "-d"], plainTextKey: plainTextKey,
+                           from: encryptedKeyDB, to: decryptedKeyDB)
             // delete the encrypted key file
             try FileManager.default.removeItem(at: encryptedKeyDB)
 
             Task { @MainActor in
                 KeyCoverObservable.shared.update()
             }
+        }
+    }
+
+    // Writes to a hidden temporary file next to the destination and moves it into place only
+    // when openssl exits successfully, so neither a failed run (e.g. a wrong key) nor a reader
+    // racing the write ever sees a partial file, and the source is never deleted for nothing.
+    private func runOpenSSL(_ command: [String], plainTextKey: String, from source: URL, to destination: URL) throws {
+        let partial = destination.deletingLastPathComponent()
+            .appendingPathComponent(".\(destination.lastPathComponent).partial")
+        FileManager.default.delete(at: partial)
+
+        let task = Process()
+        task.launchPath = "/usr/bin/openssl"
+        task.currentDirectoryPath = KeyCover.playChainPath.path
+        task.arguments = command + ["-in", source.path, "-out", partial.path, "-k", plainTextKey]
+        task.launch()
+        task.waitUntilExit()
+
+        guard task.terminationStatus == 0 else {
+            FileManager.default.delete(at: partial)
+            throw KeyCoverError.opensslFailed(task.terminationStatus)
+        }
+        if FileManager.default.fileExists(atPath: destination.path) {
+            _ = try FileManager.default.replaceItemAt(destination, withItemAt: partial)
+        } else {
+            try FileManager.default.moveItem(at: partial, to: destination)
         }
     }
 
